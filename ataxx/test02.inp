@@ -1,0 +1,17 @@
+# Trivial test of initial board with blocks
+java -ea ataxx.Main
+block b2
+block c3
+block c4
+dump
+@<===
+@<  r - - - - - b
+@<  - X - - - X -
+@<  - - X - X - -
+@<  - - X - X - -
+@<  - - X - X - -
+@<  - X - - - X -
+@<  b - - - - - r
+@<===
+quit
+

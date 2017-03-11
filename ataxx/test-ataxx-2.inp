@@ -1,0 +1,47 @@
+# ataxx Draw test for lab11.
+java -ea ataxx.Main
+
+manual blue
+block b2
+block b3
+block b4
+block c2
+block c3
+block c4
+block d2
+block d3
+block d4
+
+a7-a6
+a1-b1
+a6-a5
+b1-c1
+a5-a4
+c1-d1
+a4-a3
+d1-e1
+a7-b7
+e1-f1
+b7-c7
+g1-g2
+c7-d7
+g2-g3
+d7-e7
+g3-g4
+e7-f7
+g4-g5
+g7-g6
+start
+a1-a2
+@<Draw.
+dump
+@<===
+@<  r r r r r r r
+@<  r X X X X X r
+@<  r X X X X X r
+@<  r X X X X X b
+@<  b X X X X X b
+@<  b X X X X X b
+@<  b b b b b b b
+@<===
+quit

@@ -1,0 +1,13 @@
+# Trivial test of initial board.
+java -ea ataxx.Main
+dump
+@<===
+@<  r - - - - - b
+@<  - - - - - - -
+@<  - - - - - - -
+@<  - - - - - - -
+@<  - - - - - - -
+@<  - - - - - - -
+@<  b - - - - - r
+@<===
+quit

@@ -1,0 +1,53 @@
+# Test if AI forces a win
+java -ea ataxx.Main
+
+block a2
+block a3
+block a4
+block b2
+block b3
+block b4
+block c3
+a7-b7
+a1-b1
+b7-c7
+b1-c1
+c7-d7
+c1-d1
+d7-e7
+d1-e1
+e7-f7
+e1-f1
+c7-c6
+c1-c2
+c6-e6
+c2-d2
+e6-c6
+d2-e2
+c6-d6
+d2-d3
+d6-e6
+dump
+@<===
+@<  r r r r r r r
+@<  X X r r r X X
+@<  X X X - X X X
+@<  X X - - - X X
+@<  X X X b X X X
+@<  X X b b b X X
+@<  b b b b b b b
+@<===
+start
+@<Blue moves d3-d5.
+
+dump
+@<===
+@<  r r r r r r r
+@<  X X b b b X X
+@<  X X X b X X X
+@<  X X - - - X X
+@<  X X X - X X X
+@<  X X b b b X X
+@<  b b b b b b b
+@<===
+quit

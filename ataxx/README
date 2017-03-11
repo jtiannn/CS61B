@@ -1,0 +1,95 @@
+The test-ataxx.py script performs integration tests, feeding inputs to
+one or two instances of the ataxx program and checking that required
+outputs meet specifications.  It takes a list of test-specification
+files and interprets their contents.  These specification files have the
+following formats:
+
+* All blank lines and lines whose first non-blank character is "#" are
+  ignored.  These may be used to document tests.  In the rest of this
+  discussion, we assume all such lines have been removed.
+
+* A line of 10 or more dashes separates the file into two section corresponding
+  to two different instances of ataxx that are run simultaneously.  In the
+  absence of such a line, only one instance of the program is tested.
+
+* Each section begins with a line containing a shell command, which
+  is executed to start one instance of the ataxx program. In
+  what follows, when we say "our program", we mean "the program being run
+  in this section," while "the other program" means "the program being run
+  in the other section."
+
+* A line of the form
+     @time T
+  in a section sets a time limit of T seconds per move.  The test case fails
+  if the limit is exceeded for any move or expected output.
+  By default, it is 10 seconds.
+
+* A line of the form
+     @total-time T
+  in either section sets a time limit of T seconds on the entire test.  There
+  should only be one.  By default it is 60 seconds.
+
+* A line of the form
+     @<TEXT
+  specifies that the next line of filtered output from the program in this
+  section (see below) must exactly match TEXT, ignoring trailing blanks and
+  treating multiple blanks as one.
+
+* A line of the form
+     @?PATTERN
+  specifies that the next line of filtered output from the program in this
+  section (see below) must match PATTERN, a Python (raw) pattern.  This is
+  is essentially the same as for Java pattern strings, except that one does
+  not double backslash characters.
+
+* The line
+     @red...ENDPATN
+  matches a sequence of lines of the form "Red moves ..." or "Red passes" 
+  followed by "Blue moves ..." or "Blue passes", etc., from the program for 
+  this section, ending with a "... wins." or "Draw" message.  ENDPATN is
+  an optional Python pattern.  If present, it must match the "wins" or
+  "Draw" line (as for @?).
+
+* The line
+     @blue...ENDPATN
+  is similar, except that the first move is from Blue.
+
+* The line
+     @send red...ENDPATN
+
+  behaves like @red...ENDPATN, except that the red moves are sent to
+  the program in the other section, which sends back blue moves in
+  response.  The programs also send the final "...wins." or "Draw."
+  messages to each other, which must match.
+
+* The line
+     @send blue...ENDPATN
+  is as for '@send red...', but expects a blue move from our AI.
+
+* The line
+     @recv red...ENDPATN
+  is like @send red...ENDPATN, except that the first move (for red)
+  comes from the other program.
+
+* The line
+     @recv blue...ENDPATN
+  is as for '@recv red...ENDPATN', but expects a blue move from the other
+  program first.
+
+* All other lines not starting with "@" are fed to our program verbatim.
+  
+The output from the program in a section is *filtered* before being compared
+to the @< and @? lines.  Specifically:
+
+   * All prefixes of lines that end in ":" are removed, along with 
+     any whitespace after the colon.
+
+   * All lines containing any of the words "wins", "passes", "draw", or
+     "moves" (ignoring upper/lower case) are kept.
+
+   * All lines between two "===" delimiters are retained, as are
+     the delimiters themselves.
+
+   * All other lines, and all lines sent to the standard error stream
+     (System.err in Java) are ignored.
+
